@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { HashRouter } from 'react-router-dom';
+import App from './component/app';
 import * as serviceWorker from './serviceWorker';
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <HashRouter>
+        <CssBaseline/>
+        <App />
+    </HashRouter>,
   document.getElementById('root')
 );
 

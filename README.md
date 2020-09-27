@@ -1,44 +1,16 @@
+# App Center
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## 开发命令
 
-In the project directory, you can run:
+* `make dev`：启动本地服务器运行代码，api proxy 指向开发环境
+* `make dev-gray`：启动本地服务器运行代码，api proxy 指向灰度环境
+* `make dev-qc`：启动本地服务器运行代码，api proxy 指向测试环境
 
-### `yarn start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 打包命令
+* `make release-dev`：production mode 配以开发环境配置来编译客户端代码并打包压缩至 out 目录对应版本的子目录中；
+* `make release-gray`：production mode 配以灰度环境配置来编译客户端代码并打包压缩至 out 目录对应版本的子目录中；
+* `make release-qc`：production mode 配以测试环境配置来编译客户端代码并打包压缩至 out 目录对应版本的子目录中；
+* `make release-prod`：production mode 配以生产环境配置来编译客户端代码并打包压缩至 out 目录对应版本的子目录中；
+* `make release`：production mode 编译 dev、gray、qc、prod 四个环境的客户端代码，并统一压缩到 out 目录中；
