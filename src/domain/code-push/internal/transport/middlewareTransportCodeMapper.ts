@@ -25,7 +25,7 @@ export function useTransportCodeMapper(request: RequestMethod) {
     request.use(async function transportCodeMapper(ctx, next) {
         const codeMap = {
             0: ResponseCode.S_OK,
-            401: ResponseCode.FA_OPERATION_UNAUTHORIZED,
+            401: ResponseCode.FA_UNAUTHORIZED,
             403: ResponseCode.FA_OPERATION_FORBIDDEN,
             404: ResponseCode.FA_OPERATION_NOT_FOUND,
             9003: ResponseCode.FA_ACCESS_TOKEN_INVALID,

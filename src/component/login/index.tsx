@@ -101,7 +101,7 @@ const Login: React.FC = () => {
             enqueueSnackbar("登录成功", {
                 variant: "success"
             })
-            // accountService.persistAccessToken(data.token);
+            accountService.persistAccessToken(data.token);
     
             // @ts-ignore
             let { from } = history.location.state || { from: { pathname: "/" } };
