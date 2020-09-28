@@ -1,5 +1,5 @@
 /**
- * Created by zhiyuan.huang@thisiskapok.com.
+ * Created by samhwang1990@gmail.com.
  */
 import {InitOptions, LanguageDetectorModule, Services} from "i18next";
 import {lang__en, lang__zh} from "../constant/I18n";

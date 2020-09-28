@@ -1,5 +1,5 @@
 /**
- * Created by zhiyuan.huang@thisiskapok.com.
+ * Created by samhwang1990@gmail.com.
  */
 
 /* eslint-disable react-hooks/rules-of-hooks */

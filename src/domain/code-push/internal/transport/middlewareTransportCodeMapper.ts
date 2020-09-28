@@ -1,5 +1,5 @@
 /**
- * Created by zhiyuan.huang@thisiskapok.com.
+ * Created by samhwang1990@gmail.com.
  */
 
 import {RequestMethod, ResponseError} from 'umi-request';
@@ -39,11 +39,9 @@ export function useTransportCodeMapper(request: RequestMethod) {
             responseErr = e
         }
     
-        let { code, msg, data} = ctx.res as IApiData;
-        
         if (!!responseErr) {
             let { code, msg, data} = responseErr.data as IApiData;
-            if (codeMap.hasOwnProperty(code)) {
+            if (!!code) {
                 ctx.res = {
                     // @ts-ignore
                     code: codeMap[code],
@@ -66,20 +64,11 @@ export function useTransportCodeMapper(request: RequestMethod) {
         } else {
             let { code, msg, data} = ctx.res as IApiData;
     
-            if (codeMap.hasOwnProperty(code)) {
-                ctx.res = {
-                    // @ts-ignore
-                    code: codeMap[code],
-                    msg,
-                    data,
-                } as IEndpointResponse
-            } else {
-                ctx.res = {
-                    code: ResponseCode.FA_UNKNOWN_ERROR,
-                    msg,
-                    data,
-                }
-            }
+            ctx.res = {
+                code: code,
+                msg,
+                data,
+            } as IEndpointResponse
         }
     
         if (ctx.res.code !== ResponseCode.S_OK) {

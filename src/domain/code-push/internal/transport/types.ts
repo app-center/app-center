@@ -1,11 +1,11 @@
 /**
- * Created by zhiyuan.huang@thisiskapok.com.
+ * Created by samhwang1990@gmail.com.
  */
 
 import ResponseCode from "../../../../constant/ResponseCode";
 
 export interface IApiData<T = any> {
-    code: number;
+    code: ResponseCode;
     msg?: string;
     data?: T;
 }

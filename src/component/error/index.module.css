@@ -1,0 +1,27 @@
+.wrapper {
+    padding-top: 100px;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(245,245,245);
+}
+
+.header {
+    width: 100%;
+    text-align: center;
+
+    .logo {
+        margin-bottom: 14px;
+        height: 98px;
+    }
+
+
+    .app_name {
+        line-height: 50px;
+        font-size: 36px;
+        color: #333333;
+    }
+}
+
+.content {
+    margin-top: 55px;
+}

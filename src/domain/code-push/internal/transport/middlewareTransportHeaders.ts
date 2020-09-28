@@ -1,5 +1,5 @@
 /**
- * Created by zhiyuan.huang@thisiskapok.com.
+ * Created by samhwang1990@gmail.com.
  */
 import {Context, RequestMethod} from "umi-request";
 import {AsyncSeriesWaterfallHook} from "@funnyecho/hamon";

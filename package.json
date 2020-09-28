@@ -6,6 +6,7 @@
     "@funnyecho/hamon": "^2.0.2",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -13,10 +14,14 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "@umijs/hooks": "^1.9.3",
     "dayjs": "^1.8.36",
     "i18next": "^19.7.0",
+    "jsrsasign": "^10.0.0",
+    "notistack": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-helmet": "^6.1.0",
     "react-i18next": "^11.7.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
@@ -45,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "@types/jsrsasign": "^8.0.5",
     "@types/react-router-dom": "^5.1.5",
     "http-proxy-middleware": "^1.0.5"
   }

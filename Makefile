@@ -52,11 +52,11 @@ release-prod: -release-ver
 .PHONY: release-prod
 
 .env.production:
-	cp .env.production.$(Env) .env.production
+	cp ./env/production.$(Env) .env
 .PHONY: .env.production
 
 .env.development:
-	cp .env.development.$(Env) .env.development
+	cp ./env/development.$(Env) .env
 .PHONY: .env.development
 
 $(VersionDirTarget):

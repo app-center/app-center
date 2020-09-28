@@ -1,5 +1,5 @@
 /**
- * Created by zhiyuan.huang@thisiskapok.com.
+ * Created by samhwang1990@gmail.com.
  */
 import {BackendModule, InitOptions, ReadCallback, ResourceKey, Services} from "i18next";
 import {AsyncSeriesBailHook} from "@funnyecho/hamon";
