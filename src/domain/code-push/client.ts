@@ -6,8 +6,9 @@ import {RequestMethod} from "umi-request";
 import {IEndpointHeadersHook} from "./internal/transport/middlewareTransportHeaders";
 import {AuthorizationService} from "./authorizationService";
 import IAuthorizationService from "../IAuthorization";
-import {AccountService} from "./accountService";
-import IAccountService from "../IAccount";
+import {BranchService} from "./branchService";
+import IAccountService from "../IBranch";
+import IBranchService from "../IBranch";
 
 export function newClient(): Client {
     const client = new Client();
@@ -20,13 +21,13 @@ export type IClient = Client;
 class Client implements ITransport {
     private readonly transport: ITransport
     private readonly _authorizationService: AuthorizationService
-    private readonly _accountService: AccountService
+    private readonly _branchService: BranchService
     
     constructor() {
         this.transport = newTransport()
         
         this._authorizationService = new AuthorizationService(this)
-        this._accountService = new AccountService(this)
+        this._branchService = new BranchService(this)
     }
     
     public get request(): RequestMethod {
@@ -41,7 +42,7 @@ class Client implements ITransport {
         return this._authorizationService
     }
     
-    public get accountService(): IAccountService {
-        return this._accountService
+    public get branchService(): IBranchService {
+        return this._branchService
     }
 }

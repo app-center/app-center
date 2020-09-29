@@ -10,4 +10,5 @@ export const
     ns__app = 'app',
     ns__home = 'home',
     ns__error = 'error',
-    ns__login = 'login'
+    ns__login = 'login',
+    ns__branch = 'branch'

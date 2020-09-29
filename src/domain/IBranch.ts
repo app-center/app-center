@@ -4,8 +4,9 @@
 
 import IServiceResponse from "./IServiceResponse";
 import {IUnsubscribeToUnAuthorized} from "./IAuthorization";
+import {IBranchInfo} from "./model/BranchInfo";
 
-export default interface IAccountService {
+export default interface IBranchService {
     subscribeToUnAuthorized(cb: (res: IServiceResponse) => Promise<IServiceResponse|void>): IUnsubscribeToUnAuthorized;
     checkAuthorized(): Promise<boolean>;
     
@@ -14,4 +15,6 @@ export default interface IAccountService {
     evictAccessToken(): void;
     
     logout(): Promise<IServiceResponse>;
+    
+    getBranchInfo(): Promise<IServiceResponse<IBranchInfo>>;
 }

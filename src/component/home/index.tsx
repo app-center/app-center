@@ -2,10 +2,9 @@
  * Created by samhwang1990@gmail.com.
  */
 import React, {useCallback, useEffect} from "react";
-import {useTranslation} from "react-i18next";
 import {ns__home} from "../../constant/I18n";
-import {useHistory} from "react-router-dom";
-import {useAccountService} from "../../useHook/useDomain";
+import {useHistory, Switch, Route} from "react-router-dom";
+import {useBranchService} from "../../useHook/useDomain";
 import {
     Button,
     Dialog,
@@ -26,6 +25,9 @@ import {IHomeCtx} from "./context";
 import {withI18n} from "./context/i18n";
 import {withUnAuthorizedFlag} from "./context/unAuthorizedFlag";
 import {withDrawerOpenFlag} from "./context/drawerOpenFlag";
+import {withQueryCache} from "./context/queryCache";
+import { ReactQueryCacheProvider } from "react-query";
+import BranchInfoPage from "../branch";
 
 useEnResource(ns__home, () => Promise.resolve({
     btn__ok: 'Confirm',
@@ -38,9 +40,10 @@ const HomePage: React.FC = (props) => {
     
     context.withContext(
         withStyles(),
-        withI18n(useTranslation(ns__home, {useSuspense: false})),
+        withI18n(),
         withUnAuthorizedFlag(),
         withDrawerOpenFlag(),
+        withQueryCache(),
     )
     
     const ctx = context.useContext()
@@ -52,17 +55,17 @@ const HomePage: React.FC = (props) => {
     } = ctx
     
     const history = useHistory()
-    const accountService = useAccountService()
+    const branchService = useBranchService()
     
-    const redirectToLogin = useCallback(() => {
+    const redirectToLogin = () => {
         history.push('/login', {
             from: history.location
         });
-    }, [history])
+    }
     
     const onCloseUnAuthorizedDialog = useCallback(() => {
         redirectToLogin()
-    }, [redirectToLogin])
+    }, [])
     
     const onCloseDrawer = useCallback(() => {
         ctx.toggleDrawerOpenFlag(false)
@@ -75,15 +78,15 @@ const HomePage: React.FC = (props) => {
     }, [])
     
     useEffect(() => {
-        if (!accountService) return
+        if (!branchService) return
         
-        let unsubscribeToAuthorization = accountService.subscribeToUnAuthorized(async function() {
+        let unsubscribeToAuthorization = branchService.subscribeToUnAuthorized(async function() {
             unsubscribeToAuthorization();
             
             ctx.toggleUnAuthorizedFlag(true)
         });
-        
-        accountService.checkAuthorized().then(async authorized => {
+    
+        branchService.checkAuthorized().then(async authorized => {
             if (!authorized) {
                 await redirectToLogin();
             }
@@ -92,10 +95,10 @@ const HomePage: React.FC = (props) => {
         return () => {
             unsubscribeToAuthorization();
         }
-    }, [accountService, redirectToLogin]);
+    }, [branchService]);
     
     return (
-        <>
+        <ReactQueryCacheProvider queryCache={ctx.queryCache}>
             {ready && (
                 <div className={klass.root}>
                     <AppBar position='fixed' className={klass.appBar}>
@@ -144,7 +147,11 @@ const HomePage: React.FC = (props) => {
                     </Drawer>
                     <main className={klass.content}>
                         <Toolbar/>
-                        <div>adsiofjasdfaklsdfjkl</div>
+                        <Switch>
+                            <Route path='/' exact>
+                                <BranchInfoPage/>
+                            </Route>
+                        </Switch>
                     </main>
                 </div>
             )}
@@ -161,7 +168,7 @@ const HomePage: React.FC = (props) => {
                     </Button>
                 </DialogActions>
             </Dialog>
-        </>
+        </ReactQueryCacheProvider>
     )
 }
 

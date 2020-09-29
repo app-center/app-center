@@ -4,16 +4,16 @@
 
 import React, {useContext} from "react";
 import IAuthorizationService from "../domain/IAuthorization";
-import IAccountService from "../domain/IAccount";
+import IBranchService from "../domain/IBranch";
 
 interface IDomainContext {
     authorizationService: IAuthorizationService
-    accountService: IAccountService
+    branchService: IBranchService
 }
 
 export const DomainContext = React.createContext<IDomainContext>({
     authorizationService: undefined,
-    accountService: undefined,
+    branchService: undefined,
 });
 
 export function useDomainContext(): IDomainContext {
@@ -24,6 +24,6 @@ export function useAuthorizationService(): IAuthorizationService {
     return useDomainContext().authorizationService
 }
 
-export function useAccountService(): IAccountService {
-    return useDomainContext().accountService
+export function useBranchService(): IBranchService {
+    return useDomainContext().branchService
 }

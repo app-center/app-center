@@ -1,7 +1,6 @@
 /**
  * Created by samhwang1990@gmail.com.
  */
-import IAccountService from "../IAccount";
 import IServiceResponse from "../IServiceResponse";
 import {IUnsubscribeToUnAuthorized} from "../IAuthorization";
 import {IClient} from "./client";
@@ -10,9 +9,11 @@ import ResponseCode from "../../constant/ResponseCode";
 import {HttpHeaders} from "../../constant/HttpHeader";
 import {tapToUnauthorizedHook} from "./internal/transport/hookTransportError";
 import {refreshAuth} from "./internal/endpoint/auth";
-import {IBranchId} from "../model/BranchInfo";
+import {IBranchId, IBranchInfo} from "../model/BranchInfo";
+import IBranchService from "../IBranch";
+import {v1Branch} from "./internal/endpoint/v1_branch";
 
-export class AccountService implements IAccountService {
+export class BranchService implements IBranchService {
     public readonly client: IClient;
     private branchId: IBranchId;
     
@@ -69,5 +70,20 @@ export class AccountService implements IAccountService {
     
     logout(): Promise<IServiceResponse> {
         return Promise.resolve(undefined);
+    }
+    
+    async getBranchInfo(): Promise<IServiceResponse<IBranchInfo>> {
+        const {code, data} = await v1Branch(this.client)
+        
+        if (code !== ResponseCode.S_OK) {
+            return {
+                code,
+            }
+        }
+        
+        return {
+            code: ResponseCode.S_OK,
+            data
+        }
     }
 }

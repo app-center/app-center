@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     const history = useHistory()
     const { enqueueSnackbar } = useSnackbar();
     
-    const {authorizationService, accountService} = useDomainContext()
+    const {authorizationService, branchService} = useDomainContext()
     
     const [{id: branchId, err: branchIdErr, ht: branchIdHt}, updateBranchId] = useReducer<
         (ps: IBranchIdState, action: IBranchIdStateAction) => IBranchIdState
@@ -101,7 +101,7 @@ const Login: React.FC = () => {
             enqueueSnackbar("登录成功", {
                 variant: "success"
             })
-            accountService.persistAccessToken(data.token);
+            branchService.persistAccessToken(data.token);
     
             // @ts-ignore
             let { from } = history.location.state || { from: { pathname: "/" } };
@@ -109,7 +109,7 @@ const Login: React.FC = () => {
             history.push(from);
         }
         
-    }, [accountService, authorizationService, branchId, branchToken])
+    }, [branchService, authorizationService, branchId, branchToken])
     
     const onBranchIdChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         updateBranchId({

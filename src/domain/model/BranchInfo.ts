@@ -6,4 +6,6 @@ export type IBranchId = string;
 
 export interface IBranchInfo {
     id: IBranchId;
+    name: string;
+    createAt: number;
 }

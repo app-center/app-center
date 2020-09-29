@@ -3,7 +3,8 @@
  */
 import {TFunction} from "i18next";
 import {IHomeCtxOptions} from "./index";
-import {UseTranslationResponse} from "react-i18next";
+import {useTranslation} from "react-i18next";
+import {ns__home} from "../../../constant/I18n";
 
 declare module "./index" {
     interface IHomeCtx {
@@ -12,11 +13,12 @@ declare module "./index" {
     }
 }
 
-export function withI18n(res: UseTranslationResponse): IHomeCtxOptions {
+export function withI18n(): IHomeCtxOptions {
     return {
         useContext(ctx) {
-            ctx.t = res.t;
-            ctx.tReady = res.ready
+            const {t, ready} = useTranslation(ns__home, {useSuspense: false})
+            ctx.t = t;
+            ctx.tReady = ready
         }
     }
 }
