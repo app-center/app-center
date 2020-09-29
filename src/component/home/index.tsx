@@ -1,7 +1,7 @@
 /**
  * Created by samhwang1990@gmail.com.
  */
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {ns__home} from "../../constant/I18n";
 import {useHistory} from "react-router-dom";
@@ -19,8 +19,13 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import {useEnResource} from "../../useHook/i18n";
-import {makeStyles} from "@material-ui/core/styles";
+import {withStyles} from "./context/styles";
 import clsx from "clsx";
+import {useCtx} from "../../util/useCtx";
+import {IHomeCtx} from "./context";
+import {withI18n} from "./context/i18n";
+import {withUnAuthorizedFlag} from "./context/unAuthorizedFlag";
+import {withDrawerOpenFlag} from "./context/drawerOpenFlag";
 
 useEnResource(ns__home, () => Promise.resolve({
     btn__ok: 'Confirm',
@@ -28,64 +33,26 @@ useEnResource(ns__home, () => Promise.resolve({
     dialog__authorization_expired: 'The login of this account has expired',
 }))
 
-const drawerWidth = 240
-
-const useStyles = makeStyles((theme) => {
-    return {
-        root: {
-            display: 'flex'
-        },
-        appBar: {
-            zIndex: theme.zIndex.drawer + 1,
-        },
-        breadCrumbs: {
-            color: theme.palette.info.contrastText,
-        },
-        menuButton: {
-            marginRight: theme.spacing(2),
-        },
-        title: {
-            flexGrow: 1,
-        },
-        drawer: {
-            width: drawerWidth,
-            flexShrink: 0,
-            whiteSpace: 'nowrap',
-        },
-        drawerOpen: {
-            width: drawerWidth,
-            transition: theme.transitions.create('width', {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-        },
-        drawerClose: {
-            transition: theme.transitions.create('width', {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.leavingScreen,
-            }),
-            overflowX: 'hidden',
-            width: theme.spacing(7) + 1,
-            [theme.breakpoints.up('sm')]: {
-                width: theme.spacing(9) + 1,
-            },
-        },
-        content: {
-            flexGrow: 1,
-            padding: theme.spacing(3),
-            marginLeft: 0,
-        },
-    }
-})
-
 const HomePage: React.FC = (props) => {
-    const klass = useStyles()
-    const {t, ready} = useTranslation(ns__home, {useSuspense: false})
+    const context = useCtx<IHomeCtx>()
+    
+    context.withContext(
+        withStyles(),
+        withI18n(useTranslation(ns__home, {useSuspense: false})),
+        withUnAuthorizedFlag(),
+        withDrawerOpenFlag(),
+    )
+    
+    const ctx = context.useContext()
+    const {
+        klass,
+        t, tReady: ready,
+        unAuthorizedFlag,
+        drawerOpenFlag,
+    } = ctx
+    
     const history = useHistory()
     const accountService = useAccountService()
-    
-    const [unAuthorizedDialog, toggleUnAuthorizedDialog] = useState(false)
-    const [drawerOpen, toggleDrawer] = useState(false)
     
     const redirectToLogin = useCallback(() => {
         history.push('/login', {
@@ -98,14 +65,14 @@ const HomePage: React.FC = (props) => {
     }, [redirectToLogin])
     
     const onCloseDrawer = useCallback(() => {
-        toggleDrawer(false)
+        ctx.toggleDrawerOpenFlag(false)
     }, [])
     
-    const onToggleDrawer = () => {
-        toggleDrawer(function (open) {
+    const onToggleDrawer = useCallback(() => {
+        ctx.toggleDrawerOpenFlag(function (open) {
             return !open
         })
-    }
+    }, [])
     
     useEffect(() => {
         if (!accountService) return
@@ -113,7 +80,7 @@ const HomePage: React.FC = (props) => {
         let unsubscribeToAuthorization = accountService.subscribeToUnAuthorized(async function() {
             unsubscribeToAuthorization();
             
-            toggleUnAuthorizedDialog(true)
+            ctx.toggleUnAuthorizedFlag(true)
         });
         
         accountService.checkAuthorized().then(async authorized => {
@@ -138,8 +105,8 @@ const HomePage: React.FC = (props) => {
                                 onClick={onToggleDrawer}
                                 color="inherit"
                                 aria-label="menu">
-                                {drawerOpen && <ChevronLeftIcon/>}
-                                {!drawerOpen && <MenuIcon />}
+                                {drawerOpenFlag && <ChevronLeftIcon/>}
+                                {!drawerOpenFlag && <MenuIcon />}
                             </IconButton>
                             <div className={klass.title}>
                                 <Breadcrumbs aria-label="breadcrumb" className={klass.breadCrumbs}>
@@ -161,16 +128,16 @@ const HomePage: React.FC = (props) => {
                     <Drawer
                         variant='permanent'
                         className={clsx(klass.drawer, {
-                            [klass.drawerOpen]: drawerOpen,
-                            [klass.drawerClose]: !drawerOpen,
+                            [klass.drawerOpen]: drawerOpenFlag,
+                            [klass.drawerClose]: !drawerOpenFlag,
                         })}
                         classes={{
                             paper: clsx({
-                                [klass.drawerOpen]: drawerOpen,
-                                [klass.drawerClose]: !drawerOpen,
+                                [klass.drawerOpen]: drawerOpenFlag,
+                                [klass.drawerClose]: !drawerOpenFlag,
                             })
                         }}
-                        open={drawerOpen}
+                        open={drawerOpenFlag}
                         onClose={onCloseDrawer}>
                         <Toolbar/>
                         <List component="nav" aria-label="Environments"></List>
@@ -181,21 +148,19 @@ const HomePage: React.FC = (props) => {
                     </main>
                 </div>
             )}
-            {unAuthorizedDialog && (
-                <Dialog
-                    open={unAuthorizedDialog}
-                    onClose={onCloseUnAuthorizedDialog}
-                >
-                    <DialogContent>
-                        <DialogContentText>{t('dialog__authorization_expired', '登录状态过期，需要重新登录')}</DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={onCloseUnAuthorizedDialog} color="primary" autoFocus>
-                            {t('btn__ok', '确定')}
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            )}
+            <Dialog
+                open={unAuthorizedFlag}
+                onClose={onCloseUnAuthorizedDialog}
+            >
+                <DialogContent>
+                    <DialogContentText>{t('dialog__authorization_expired', '登录状态过期，需要重新登录')}</DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={onCloseUnAuthorizedDialog} color="primary" autoFocus>
+                        {t('btn__ok', '确定')}
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </>
     )
 }

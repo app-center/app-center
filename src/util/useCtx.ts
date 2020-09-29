@@ -17,20 +17,30 @@ export function useCtx<T = {}>(): IUseCtxExport<T> {
     
     const withContext = (...inps: ICtxOption<T>[]) => {
         inps.forEach(inp => {
-            if (!inp.useContext) return;
-            
-            let mids = inp.useContext;
-            
-            if (!Array.isArray(mids)) {
-                mids = [mids, undefined];
-            }
-            
-            if (typeof mids[0] === 'function') {
-                captureOptions.current[captureOptionsIndex++] = mids[0];
-            }
-            
-            if (typeof mids[1] === 'function') {
-                bubbleOptions.current[bubbleOptionsIndex++] = mids[1];
+            if (typeof inp === 'function') {
+                captureOptions.current[captureOptionsIndex++] = inp
+            } else if (Array.isArray(inp)) {
+                if (typeof inp[0] === 'function') {
+                    captureOptions.current[captureOptionsIndex++] = inp[0];
+                }
+        
+                if (typeof inp[1] === 'function') {
+                    bubbleOptions.current[bubbleOptionsIndex++] = inp[1];
+                }
+            } else {
+                let mids = inp.useContext;
+    
+                if (!Array.isArray(mids)) {
+                    mids = [mids, undefined];
+                }
+    
+                if (typeof mids[0] === 'function') {
+                    captureOptions.current[captureOptionsIndex++] = mids[0];
+                }
+    
+                if (typeof mids[1] === 'function') {
+                    bubbleOptions.current[bubbleOptionsIndex++] = mids[1];
+                }
             }
         })
     };
@@ -63,8 +73,9 @@ export function useCtx<T = {}>(): IUseCtxExport<T> {
     }
 }
 
-export interface ICtxOption<T> {
-    useContext?: ICtxOptionMiddleware<T> | [ICtxOptionMiddleware<T> | void, ICtxOptionMiddleware<T> | void];
-}
+export type ICtxOption<T> =
+    { useContext?: ICtxOptionMiddleware<T> | [ICtxOptionMiddleware<T> | void, ICtxOptionMiddleware<T> | void]; } |
+    ICtxOptionMiddleware<T> |
+    [ICtxOptionMiddleware<T> | void, ICtxOptionMiddleware<T> | void]
 
 type ICtxOptionMiddleware<T> = (ctx: T) => (T | void);
