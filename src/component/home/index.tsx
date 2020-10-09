@@ -3,7 +3,7 @@
  */
 import React, {useCallback, useEffect} from "react";
 import {ns__home} from "../../constant/I18n";
-import {Route, Switch, useHistory} from "react-router-dom";
+import {Route, Switch, useHistory, Link as RouterLink} from "react-router-dom";
 import {useBranchService} from "../../useHook/useDomain";
 import {
     AppBar, Avatar,
@@ -147,7 +147,7 @@ const HomePage: React.FC = (props) => {
                                             return <Typography key={item.text} color="inherit" variant={item.variant || 'body1'}>{item.text}</Typography>
                                         } else {
                                             return (
-                                                <Link color="inherit" key={item.text} href={item.link}>
+                                                <Link component={RouterLink} color="inherit" key={item.text} to={item.link}>
                                                     <Typography variant={item.variant || 'body1'}>
                                                         {item.text}
                                                     </Typography>
