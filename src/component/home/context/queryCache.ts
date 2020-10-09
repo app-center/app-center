@@ -4,10 +4,11 @@
 import {IHomeCtxOptions} from "./index";
 import {useCreation} from "@umijs/hooks";
 import {QueryCache} from "react-query";
+import {useEffect} from "react";
 
 declare module './index' {
     interface IHomeCtx {
-        queryCache
+        queryCache: QueryCache
     }
 }
 
@@ -16,5 +17,13 @@ export function withQueryCache(): IHomeCtxOptions {
         ctx.queryCache = useCreation(() => {
             return new QueryCache()
         }, undefined)
+        
+        useEffect(() => {
+            return () => {
+                ctx.queryCache.clear({
+                    notify: false
+                })
+            }
+        }, [ctx.queryCache])
     }
 }

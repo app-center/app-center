@@ -11,6 +11,8 @@ useEnResource(ns__branch, () => Promise.resolve({
     lbl__branch_name: 'Branch Name',
     lbl__branch_create_at: 'Create At',
     
+    lbl__env_list: 'Environments',
+    
     txt__query_fail: 'Failed to fetch branch info: {{code}}'
 }))
 

@@ -11,7 +11,8 @@ import {tapToUnauthorizedHook} from "./internal/transport/hookTransportError";
 import {refreshAuth} from "./internal/endpoint/auth";
 import {IBranchId, IBranchInfo} from "../model/BranchInfo";
 import IBranchService from "../IBranch";
-import {v1Branch} from "./internal/endpoint/v1_branch";
+import {v1_branch} from "./internal/endpoint/v1_branch";
+import {v1_logout} from "./internal/endpoint/v1_logout";
 
 export class BranchService implements IBranchService {
     public readonly client: IClient;
@@ -68,12 +69,20 @@ export class BranchService implements IBranchService {
         return localStorage.getItem(LS_ACCESS_TOKEN) || '';
     }
     
-    logout(): Promise<IServiceResponse> {
-        return Promise.resolve(undefined);
+    async logout(): Promise<IServiceResponse> {
+        const {code} = await v1_logout(this.client)
+        
+        if (code === ResponseCode.S_OK) {
+            this.evictAccessToken()
+        }
+        
+        return {
+            code,
+        }
     }
     
     async getBranchInfo(): Promise<IServiceResponse<IBranchInfo>> {
-        const {code, data} = await v1Branch(this.client)
+        const {code, data} = await v1_branch(this.client)
         
         if (code !== ResponseCode.S_OK) {
             return {
@@ -85,5 +94,9 @@ export class BranchService implements IBranchService {
             code: ResponseCode.S_OK,
             data
         }
+    }
+    
+    getBranchId(): string {
+        return this.branchId
     }
 }

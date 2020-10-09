@@ -7,8 +7,9 @@ import {IEndpointHeadersHook} from "./internal/transport/middlewareTransportHead
 import {AuthorizationService} from "./authorizationService";
 import IAuthorizationService from "../IAuthorization";
 import {BranchService} from "./branchService";
-import IAccountService from "../IBranch";
 import IBranchService from "../IBranch";
+import {EnvService} from "./envService";
+import {IEnvService} from "../IEnv";
 
 export function newClient(): Client {
     const client = new Client();
@@ -22,12 +23,14 @@ class Client implements ITransport {
     private readonly transport: ITransport
     private readonly _authorizationService: AuthorizationService
     private readonly _branchService: BranchService
+    private readonly _envService: EnvService
     
     constructor() {
         this.transport = newTransport()
         
         this._authorizationService = new AuthorizationService(this)
         this._branchService = new BranchService(this)
+        this._envService = new EnvService(this)
     }
     
     public get request(): RequestMethod {
@@ -44,5 +47,9 @@ class Client implements ITransport {
     
     public get branchService(): IBranchService {
         return this._branchService
+    }
+    
+    public get envService(): IEnvService {
+        return this._envService
     }
 }

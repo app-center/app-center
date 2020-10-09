@@ -13,7 +13,7 @@ declare module './index' {
 
 export function withDrawerOpenFlag(): IHomeCtxOptions {
     return (ctx) => {
-        const [flag, updateFlag] = useState(false)
+        const [flag, updateFlag] = useState(true)
         ctx.drawerOpenFlag = flag
         ctx.toggleDrawerOpenFlag = updateFlag
     }

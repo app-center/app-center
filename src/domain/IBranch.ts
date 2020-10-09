@@ -17,4 +17,5 @@ export default interface IBranchService {
     logout(): Promise<IServiceResponse>;
     
     getBranchInfo(): Promise<IServiceResponse<IBranchInfo>>;
+    getBranchId(): string
 }

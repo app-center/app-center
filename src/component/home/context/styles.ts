@@ -47,6 +47,9 @@ const useStyles = makeStyles((theme) => {
                 width: theme.spacing(9) + 1,
             },
         },
+        envNameAvatar: {
+            textTransform: 'uppercase',
+        },
         content: {
             flexGrow: 1,
             padding: theme.spacing(3),

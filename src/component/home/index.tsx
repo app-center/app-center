@@ -3,17 +3,24 @@
  */
 import React, {useCallback, useEffect} from "react";
 import {ns__home} from "../../constant/I18n";
-import {useHistory, Switch, Route} from "react-router-dom";
+import {Route, Switch, useHistory} from "react-router-dom";
 import {useBranchService} from "../../useHook/useDomain";
 import {
+    AppBar, Avatar,
+    Breadcrumbs,
     Button,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
-    AppBar,
     Drawer,
-    Toolbar, IconButton, Typography, List, Breadcrumbs, Link
+    IconButton,
+    Link,
+    List,
+    ListItem,
+    ListItemAvatar,
+    Toolbar,
+    Typography
 } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
@@ -26,8 +33,13 @@ import {withI18n} from "./context/i18n";
 import {withUnAuthorizedFlag} from "./context/unAuthorizedFlag";
 import {withDrawerOpenFlag} from "./context/drawerOpenFlag";
 import {withQueryCache} from "./context/queryCache";
-import { ReactQueryCacheProvider } from "react-query";
+import {ReactQueryCacheProvider} from "react-query";
 import BranchInfoPage from "../branch";
+import EnvInfoPage from '../env'
+import ResponseCode from "../../constant/ResponseCode";
+import {useQueryEnvList} from "../../useHook/useQueryCache";
+import {withSelectedEnv} from "./context/selectedEnv";
+import {withBreadCrumbItems} from "./context/breadCrumbItems";
 
 useEnResource(ns__home, () => Promise.resolve({
     btn__ok: 'Confirm',
@@ -44,6 +56,8 @@ const HomePage: React.FC = (props) => {
         withUnAuthorizedFlag(),
         withDrawerOpenFlag(),
         withQueryCache(),
+        withSelectedEnv(),
+        withBreadCrumbItems(),
     )
     
     const ctx = context.useContext()
@@ -52,15 +66,16 @@ const HomePage: React.FC = (props) => {
         t, tReady: ready,
         unAuthorizedFlag,
         drawerOpenFlag,
+        selectedEnvId,
+        breadCrumbItems,
     } = ctx
     
     const history = useHistory()
     const branchService = useBranchService()
+    const {data: envList = []} = useQueryEnvList()
     
     const redirectToLogin = () => {
-        history.push('/login', {
-            from: history.location
-        });
+        history.push('/login');
     }
     
     const onCloseUnAuthorizedDialog = useCallback(() => {
@@ -77,6 +92,19 @@ const HomePage: React.FC = (props) => {
         })
     }, [])
     
+    const onLogout = useCallback(async () => {
+        const {code} = await branchService.logout()
+        if (code === ResponseCode.S_OK) {
+            redirectToLogin()
+        } else {
+        
+        }
+    }, [branchService])
+    
+    const onEnvItemClick = (id: string) => () => {
+        history.push(`/env/${id}`)
+    }
+    
     useEffect(() => {
         if (!branchService) return
         
@@ -88,7 +116,7 @@ const HomePage: React.FC = (props) => {
     
         branchService.checkAuthorized().then(async authorized => {
             if (!authorized) {
-                await redirectToLogin();
+                redirectToLogin();
             }
         });
         
@@ -107,23 +135,29 @@ const HomePage: React.FC = (props) => {
                                 className={klass.menuButton}
                                 onClick={onToggleDrawer}
                                 color="inherit"
+                                edge="start"
                                 aria-label="menu">
                                 {drawerOpenFlag && <ChevronLeftIcon/>}
                                 {!drawerOpenFlag && <MenuIcon />}
                             </IconButton>
                             <div className={klass.title}>
                                 <Breadcrumbs aria-label="breadcrumb" className={klass.breadCrumbs}>
-                                    <Link color="inherit" href="/">
-                                        <Typography variant="h6">
-                                            AppCenter
-                                        </Typography>
-                                    </Link>
-                                    <Link color="inherit" href="/getting-started/installation/">
-                                        Core
-                                    </Link>
+                                    {breadCrumbItems.map((item) => {
+                                        if (item.link == undefined) {
+                                            return <Typography key={item.text} color="inherit" variant={item.variant || 'body1'}>{item.text}</Typography>
+                                        } else {
+                                            return (
+                                                <Link color="inherit" key={item.text} href={item.link}>
+                                                    <Typography variant={item.variant || 'body1'}>
+                                                        {item.text}
+                                                    </Typography>
+                                                </Link>
+                                            )
+                                        }
+                                    })}
                                 </Breadcrumbs>
                             </div>
-                            <Button size='large' color="inherit">
+                            <Button size='large' color="inherit" onClick={onLogout}>
                                 {t('btn__logout','退出')}
                             </Button>
                         </Toolbar>
@@ -143,13 +177,33 @@ const HomePage: React.FC = (props) => {
                         open={drawerOpenFlag}
                         onClose={onCloseDrawer}>
                         <Toolbar/>
-                        <List component="nav" aria-label="Environments"></List>
+                        <List component="nav" aria-label="Environments">
+                            {envList.map(env => {
+                                return (
+                                    <ListItem
+                                        onClick={onEnvItemClick(env.id)}
+                                        button
+                                        selected={env.id === selectedEnvId}
+                                        key={env.id}>
+                                        <ListItemAvatar>
+                                            <Avatar alt={env.name} className={klass.envNameAvatar}>{env.name[0]}</Avatar>
+                                        </ListItemAvatar>
+                                        <Typography variant="inherit" noWrap>
+                                            {env.name}
+                                        </Typography>
+                                    </ListItem>
+                                )
+                            })}
+                        </List>
                     </Drawer>
                     <main className={klass.content}>
                         <Toolbar/>
                         <Switch>
                             <Route path='/' exact>
                                 <BranchInfoPage/>
+                            </Route>
+                            <Route path='/env/:envId'>
+                                <EnvInfoPage/>
                             </Route>
                         </Switch>
                     </main>

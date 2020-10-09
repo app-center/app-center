@@ -27,6 +27,8 @@ enum ResponseCode {
     FA_TODO = 'FA_TODO',
 
     FA_ACCESS_TOKEN_INVALID = 'FA_ACCESS_TOKEN_INVALID',
+    
+    FA_ENV_NOT_FOUND = 'FA_ENV_NOT_FOUND',
 }
 
 export default ResponseCode;

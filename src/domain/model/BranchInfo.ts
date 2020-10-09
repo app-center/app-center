@@ -9,3 +9,5 @@ export interface IBranchInfo {
     name: string;
     createAt: number;
 }
+
+export type IBranchInfoFromSvr = IBranchInfo

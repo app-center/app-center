@@ -6,7 +6,16 @@ import {makeStyles} from "@material-ui/core/styles";
 export const useStyles = makeStyles(theme => {
     return {
         card: {
-            width: 375,
+            width: "100%",
+        },
+        envs: {
+            width: "100%",
+        },
+        envSize: {
+            padding: theme.spacing(2)
+        },
+        envNameAvatar: {
+            textTransform: 'uppercase',
         }
     }
 })
