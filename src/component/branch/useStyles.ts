@@ -11,11 +11,22 @@ export const useStyles = makeStyles(theme => {
         envs: {
             width: "100%",
         },
-        envSize: {
-            padding: theme.spacing(2)
-        },
         envNameAvatar: {
             textTransform: 'uppercase',
-        }
+            marginRight: theme.spacing(1),
+        },
+        envExpanded: {
+            marginTop: '0 !important'
+        },
+        envSummaryExpanded: {
+            marginBottom: '0 !important',
+        },
+        envSummaryContent: {
+            alignItems: 'center',
+        },
+        envDetails: {
+            paddingLeft: 40 + theme.spacing(3),
+            flexDirection: 'column',
+        },
     }
 })

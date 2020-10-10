@@ -11,4 +11,5 @@ export const
     ns__home = 'home',
     ns__error = 'error',
     ns__login = 'login',
-    ns__branch = 'branch'
+    ns__branch = 'branch',
+    ns__env = 'env'

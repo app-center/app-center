@@ -2,7 +2,6 @@
  * Created by samhwang1990@gmail.com.
  */
 import React, {useCallback, useEffect} from "react";
-import {ns__home} from "../../constant/I18n";
 import {Route, Switch, useHistory, Link as RouterLink} from "react-router-dom";
 import {useBranchService} from "../../useHook/useDomain";
 import {
@@ -24,7 +23,6 @@ import {
 } from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import {useEnResource} from "../../useHook/i18n";
 import {withStyles} from "./context/styles";
 import clsx from "clsx";
 import {useCtx} from "../../util/useCtx";
@@ -40,12 +38,7 @@ import ResponseCode from "../../constant/ResponseCode";
 import {useQueryEnvList} from "../../useHook/useQueryCache";
 import {withSelectedEnv} from "./context/selectedEnv";
 import {withBreadCrumbItems} from "./context/breadCrumbItems";
-
-useEnResource(ns__home, () => Promise.resolve({
-    btn__ok: 'Confirm',
-    btn__logout: 'Logout',
-    dialog__authorization_expired: 'The login of this account has expired',
-}))
+import {withVersionReleaseFlag} from "./context/versionReleaseFlag";
 
 const HomePage: React.FC = (props) => {
     const context = useCtx<IHomeCtx>()
@@ -57,6 +50,7 @@ const HomePage: React.FC = (props) => {
         withDrawerOpenFlag(),
         withQueryCache(),
         withSelectedEnv(),
+        withVersionReleaseFlag(),
         withBreadCrumbItems(),
     )
     

@@ -3,7 +3,7 @@
  */
 import {IHomeCtxOptions} from "./index";
 import { useRouteMatch } from "react-router-dom";
-import {useQueryBranchInfo, useQueryEnvInfo} from "../../../useHook/useQueryCache";
+import {useQueryEnvInfo} from "../../../useHook/useQueryCache";
 
 declare module './index' {
     interface IHomeCtx {

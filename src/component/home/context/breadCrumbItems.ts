@@ -38,6 +38,13 @@ export function withBreadCrumbItems(): IHomeCtxOptions {
             })
         }
         
+        if (ctx.versionReleaseFlag) {
+            items.push({
+                link: `/env/${ctx.selectedEnvId}/version/release`,
+                text: '版本发布'
+            })
+        }
+        
         if (items.length > 1) {
             items[items.length - 1].link = undefined
         }
