@@ -13,3 +13,12 @@ export interface IVersionInfo {
 }
 
 export type IVersionInfoFromSvr = IVersionInfo
+
+export interface IReleaseVersionForm {
+    envId: string;
+    appVersion: string;
+    compatAppVersion: string;
+    mustUpdate: boolean;
+    changelog: string;
+    packageFileKey: string;
+}

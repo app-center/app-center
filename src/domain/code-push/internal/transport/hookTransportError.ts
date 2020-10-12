@@ -12,7 +12,7 @@ export const hookTransportError = new AsyncSeriesWaterfallHook<[IEndpointRespons
 
 export function tapToUnauthorizedHook(cb: (res: IEndpointResponse) => Promise<IEndpointResponse|void>): ITapDestroy {
     let unTapToOperationUnauthorized = hookTransportError.tapPromise(cb, ResponseCode.FA_UNAUTHORIZED);
-    let unTapToInvalidAccessToken = hookTransportError.tapPromise(cb, ResponseCode.FA_ACCESS_TOKEN_INVALID);
+    let unTapToInvalidAccessToken = hookTransportError.tapPromise(cb, ResponseCode.FA_INVALID_TOKEN);
     let unTapToHttp401 = hookTransportError.tapPromise(cb, ResponseCode.FA_HTTP_401);
 
     return () => {

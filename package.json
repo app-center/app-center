@@ -17,6 +17,7 @@
     "@umijs/hooks": "^1.9.3",
     "clsx": "^1.1.1",
     "dayjs": "^1.8.36",
+    "formik": "^2.2.0",
     "i18next": "^19.7.0",
     "jsrsasign": "^10.0.0",
     "notistack": "^1.0.0",

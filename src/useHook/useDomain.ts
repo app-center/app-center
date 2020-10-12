@@ -7,12 +7,14 @@ import IAuthorizationService from "../domain/IAuthorization";
 import IBranchService from "../domain/IBranch";
 import {IEnvService} from "../domain/IEnv";
 import {IVersionService} from "../domain/IVersion";
+import {IUploadService} from "../domain/IUpload";
 
 interface IDomainContext {
     authorizationService: IAuthorizationService
     branchService: IBranchService
     envService: IEnvService
     versionService: IVersionService
+    uploadService: IUploadService
 }
 
 export const DomainContext = React.createContext<IDomainContext>({
@@ -20,6 +22,7 @@ export const DomainContext = React.createContext<IDomainContext>({
     branchService: undefined,
     envService: undefined,
     versionService: undefined,
+    uploadService: undefined,
 });
 
 export function useDomainContext(): IDomainContext {
@@ -40,4 +43,8 @@ export function useEnvService(): IEnvService {
 
 export function useVersionService(): IVersionService {
     return useDomainContext().versionService
+}
+
+export function useUploadService(): IUploadService {
+    return useDomainContext().uploadService
 }

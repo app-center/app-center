@@ -4,6 +4,7 @@
 
 import {IHomeCtxOptions} from "./index";
 import {Variant} from "@material-ui/core/styles/createTypography";
+import {useLocales} from "../../.locales";
 
 interface IBreadCrumbItem {
     link?: string;
@@ -29,6 +30,8 @@ export function withBreadCrumbItems(): IHomeCtxOptions {
         ]
         ctx.breadCrumbItems = items
     }, (ctx) => {
+        const appT = useLocales()
+        
         let items = ctx.breadCrumbItems
         
         if (ctx.selectedEnvId) {
@@ -41,7 +44,7 @@ export function withBreadCrumbItems(): IHomeCtxOptions {
         if (ctx.versionReleaseFlag) {
             items.push({
                 link: `/env/${ctx.selectedEnvId}/version/release`,
-                text: '版本发布'
+                text: appT('txt__release_version', '版本发布')
             })
         }
         

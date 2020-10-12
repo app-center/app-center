@@ -12,6 +12,8 @@ import {EnvService} from "./envService";
 import {IEnvService} from "../IEnv";
 import {VersionService} from "./versionService";
 import {IVersionService} from "../IVersion";
+import {UploadService} from "./uploadService";
+import {IUploadService} from "../IUpload";
 
 export function newClient(): Client {
     const client = new Client();
@@ -27,6 +29,7 @@ class Client implements ITransport {
     private readonly _branchService: BranchService
     private readonly _envService: EnvService
     private readonly _versionService: VersionService
+    private readonly _uploadService: UploadService
     
     constructor() {
         this.transport = newTransport()
@@ -35,6 +38,7 @@ class Client implements ITransport {
         this._branchService = new BranchService(this)
         this._envService = new EnvService(this)
         this._versionService = new VersionService(this)
+        this._uploadService = new UploadService(this)
     }
     
     public get request(): RequestMethod {
@@ -59,5 +63,9 @@ class Client implements ITransport {
     
     public get versionService(): IVersionService {
         return this._versionService
+    }
+    
+    public get uploadService(): IUploadService {
+        return this._uploadService
     }
 }

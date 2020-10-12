@@ -12,4 +12,5 @@ export const
     ns__error = 'error',
     ns__login = 'login',
     ns__branch = 'branch',
-    ns__env = 'env'
+    ns__env = 'env',
+    ns__env__release_version = 'env__release_version'

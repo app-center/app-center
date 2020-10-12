@@ -130,7 +130,7 @@ const Login: React.FC = () => {
             <Helmet>
                 <title>{t('title', '登录')}</title>
             </Helmet>
-            <form noValidate>
+            <form noValidate autoComplete='on'>
                 <Grid container className={klass.wrapper} direction="row" justify="center" alignItems="center">
                     <Card className={klass.card}>
                         <div className={klass.header}>
