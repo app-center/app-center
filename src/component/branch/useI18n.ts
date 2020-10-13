@@ -19,8 +19,10 @@ useEnResource(ns__branch, () => Promise.resolve({
     
     lbl__env_create__title: 'Create environment',
     lbl__env_create__name: 'Name',
+    lbl__env_create__enc_token: 'Access Token',
     
     ph__env_create__name: 'name',
+    ph__env_create__enc_token: 'access token',
     
     btn__env_create: 'Create',
     

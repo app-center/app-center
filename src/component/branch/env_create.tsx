@@ -10,7 +10,6 @@ import {useEnvService} from "../../useHook/useDomain";
 import ResponseCode from "../../constant/ResponseCode";
 import {useSnackbar} from "notistack";
 
-
 const EnvCreate: React.FC = () => {
     const t = useI18n()
     const envService = useEnvService()
@@ -25,9 +24,13 @@ const EnvCreate: React.FC = () => {
     } = useFormik<ICreateFields>({
         initialValues: {
             name: '',
+            encToken: '',
         },
         async onSubmit(values: ICreateFields) {
-            const res = await envService.createEnv(values.name)
+            const res = await envService.createEnv({
+                name: values.name,
+                encToken: values.encToken,
+            })
             
             if (res.code === ResponseCode.S_OK) {
                 enqueueSnackbar(t('txt__env_create_success', "创建成功"), {
@@ -72,6 +75,20 @@ const EnvCreate: React.FC = () => {
                             label={t('lbl__env_create__name', '环境名')}
                             placeholder={t('ph__env_create__name', '环境名')}
                         />
+                        <TextField
+                            variant="outlined"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            margin={"normal"}
+                            fullWidth
+                            name='encToken'
+                            value={values.encToken}
+                            onChange={handleChange}
+                            error={!!errors.encToken}
+                            label={t('lbl__env_create__enc_token', '访问密钥')}
+                            placeholder={t('ph__env_create__enc_token', '访问密钥')}
+                        />
                         <Box mt={2}>
                             <Button size="small" type="submit" variant="contained" color="primary" disabled={!isCreateReady}>
                                 {t('btn__env_create', '创建')}
@@ -87,5 +104,6 @@ const EnvCreate: React.FC = () => {
 export default EnvCreate
 
 interface ICreateFields {
-    name: string
+    name: string;
+    encToken: string;
 }
