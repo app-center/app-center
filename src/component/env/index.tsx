@@ -8,10 +8,6 @@ import {IEnvCtx} from "./context";
 import {withEnvId} from "./context/envId";
 import {withEnvInfo} from "./context/envInfo";
 import {
-    Accordion,
-    AccordionSummary,
-    AccordionDetails,
-    Box,
     Card,
     CardContent,
     Grid,
@@ -83,19 +79,19 @@ const EnvPage: React.FC = () => {
                                 {envInfo.name}
                             </Typography>
                             <Typography variant="subtitle2" color="textSecondary">
-                                环境 ID
+                                {t('lbl__env_id', '环境 ID')}
                             </Typography>
                             <Typography variant="h6" gutterBottom>
                                 {envInfo.id}
                             </Typography>
                             <Typography variant="subtitle2" color="textSecondary">
-                                访问密钥
+                                {t('lbl__env_enc_token', '访问密钥')}
                             </Typography>
                             <Typography variant="h6" gutterBottom>
                                 {envInfo.encToken}
                             </Typography>
                             <Typography variant="subtitle2" color="textSecondary">
-                                创建日期
+                                {t('lbl__env_create_at', '创建日期')}
                             </Typography>
                             <Typography variant="h6">
                                 {displayMS(envInfo.createAt)}

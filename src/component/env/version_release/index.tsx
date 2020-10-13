@@ -73,12 +73,12 @@ const VersionReleasePage: React.FC<IVersionReleaseProps> = ({
             })
             
             if (res.code === ResponseCode.S_OK) {
-                enqueueSnackbar("发布成功", {
+                enqueueSnackbar(t('txt__release_success', "发布成功"), {
                     variant: "success"
                 })
                 history.push(`/env/${envInfo.id}`)
             } else {
-                enqueueSnackbar("发布失败", {
+                enqueueSnackbar(t('txt__release_fail', "发布失败"), {
                     variant: "error"
                 })
             }

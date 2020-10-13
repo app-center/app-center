@@ -13,6 +13,10 @@ useEnResource(ns__branch, () => Promise.resolve({
     
     lbl__env_list: 'Environments',
     
+    lbl__env_id: 'Environment ID',
+    lbl__env_enc_token: 'Access Token',
+    lbl__env_create_at: 'Create At',
+    
     txt__query_fail: 'Failed to fetch branch info: {{code}}'
 }))
 

@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => {
             width: "100%",
         },
         fabAdd: {
-            position: "absolute",
+            position: "fixed",
             right: theme.spacing(3),
             bottom: theme.spacing(3),
         },

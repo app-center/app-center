@@ -28,6 +28,9 @@ useEnResource(ns__env__release_version, () => Promise.resolve({
     lbl__step_changelog: 'Changelog',
     lbl__step_package: 'Upload Package',
     
+    txt__release_success: 'Release completed',
+    txt__release_fail: 'Release failed',
+    
 }))
 
 export function useI18n(): TFunction {

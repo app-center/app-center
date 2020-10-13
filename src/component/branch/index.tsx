@@ -80,7 +80,7 @@ export default function BranchInfoPage() {
                                                 variant="caption"
                                                 color="textSecondary"
                                             >
-                                                环境 ID
+                                                {t('lbl__env_id', '环境 ID')}
                                             </Typography>
                                             <Typography
                                                 variant="body2"
@@ -93,7 +93,7 @@ export default function BranchInfoPage() {
                                                 variant="caption"
                                                 color="textSecondary"
                                             >
-                                                访问密钥
+                                                {t('lbl__env_enc_token', '访问密钥')}
                                             </Typography>
                                             <Typography
                                                 variant="body2"
@@ -106,7 +106,7 @@ export default function BranchInfoPage() {
                                                 variant="caption"
                                                 color="textSecondary"
                                             >
-                                                创建日期
+                                                {t('lbl__env_create_at', '创建日期')}
                                             </Typography>
                                             <Typography
                                                 variant="body2"
