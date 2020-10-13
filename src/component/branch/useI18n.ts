@@ -17,7 +17,16 @@ useEnResource(ns__branch, () => Promise.resolve({
     lbl__env_enc_token: 'Access Token',
     lbl__env_create_at: 'Create At',
     
-    txt__query_fail: 'Failed to fetch branch info: {{code}}'
+    lbl__env_create__title: 'Create environment',
+    lbl__env_create__name: 'Name',
+    
+    ph__env_create__name: 'name',
+    
+    btn__env_create: 'Create',
+    
+    txt__query_fail: 'Failed to fetch branch info: {{code}}',
+    txt__env_create_success: 'Environment created',
+    txt__env_create_fail: 'Failed to create environment',
 }))
 
 export function useI18n(): TFunction {

@@ -3,7 +3,7 @@
  */
 import React, {ChangeEvent, useCallback, useReducer} from "react"
 import {Button, Card, Grid, TextField} from "@material-ui/core"
-import LockIcon from '@material-ui/icons/Lock'
+import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import {Helmet} from 'react-helmet'
 import {useStyles} from "./useStyles"
 import {useLocales} from "./.locales"
@@ -134,7 +134,7 @@ const Login: React.FC = () => {
                 <Grid container className={klass.wrapper} direction="row" justify="center" alignItems="center">
                     <Card className={klass.card}>
                         <div className={klass.header}>
-                            <LockIcon fontSize='large' />
+                            <FingerprintIcon fontSize='inherit' />
                         </div>
                         <div className={klass.hint}>
                             {t('form__label__hint', 'App Center')}

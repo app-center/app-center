@@ -4,7 +4,7 @@
 import React from "react";
 import {useQueryVersionList} from "../../../useHook/useQueryCache";
 import {IEnvInfo} from "../../../domain/model/EnvInfo";
-import {Accordion, AccordionDetails, AccordionSummary, Box, Grid, Typography} from "@material-ui/core";
+import {Accordion, AccordionDetails, AccordionSummary, Box, Grid, Typography, Paper, Divider} from "@material-ui/core";
 import {IVersionInfo} from "../../../domain/model/VersionInfo";
 import CheckIcon from "@material-ui/icons/Check";
 import ClearIcon from "@material-ui/icons/Clear";
@@ -25,7 +25,7 @@ const VersionList: React.FC<IVersionListProps> = ({
         <>
             {isSuccess && (
                 <>
-                    <Box p={2} width="100%">
+                    <Box p={2} mb={2} width="100%" component={Paper}>
                         <Typography color="textSecondary">
                             {t('lbl__env_list', '版本列表')}
                         </Typography>
@@ -33,7 +33,7 @@ const VersionList: React.FC<IVersionListProps> = ({
                             {versionList.length}
                         </Typography>
                     </Box>
-                    <Box mt={2} width="100%">
+                    <Box width="100%">
                         {versionList.map((ver: IVersionInfo, i) => {
                             return (
                                 <Accordion key={ver.appVersion}>

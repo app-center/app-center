@@ -144,7 +144,7 @@ const VersionReleasePage: React.FC<IVersionReleaseProps> = ({
     }
     
     return (
-        <Box p={2} width="100%">
+        <Box px={2} width="100%">
             <Card>
                 <CardHeader
                     title={appTrans('txt__release_version', '版本发布')}

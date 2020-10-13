@@ -4,4 +4,5 @@
 
 export default {
     txt__release_version: 'Release Version',
+    txt__create_env: 'Create Environment',
 }

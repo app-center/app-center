@@ -14,14 +14,16 @@ export const useStyles = makeStyles(theme => {
         },
         header: {
             display: 'flex',
-            margin: '1em',
+            paddingTop: theme.spacing(2),
             justifyContent: 'center',
+            fontSize: theme.typography.h3.fontSize,
         },
         hint: {
             display: 'flex',
-            marginTop: '1em',
             justifyContent: 'center',
+            paddingTop: theme.spacing(1),
             color: theme.palette.text.secondary,
+            fontSize: theme.typography.h4.fontSize,
         },
         input: {
             padding: theme.spacing(2, 3),

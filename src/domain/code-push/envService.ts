@@ -5,7 +5,7 @@ import {IEnvService} from "../IEnv";
 import {IClient} from "./client";
 import IServiceResponse from "../IServiceResponse";
 import {IEnvInfo} from "../model/EnvInfo";
-import {v1_env, v1_env_$envId} from "./internal/endpoint/v1_env";
+import {v1_env, v1_env_$envId, v1_env__post} from "./internal/endpoint/v1_env";
 import ResponseCode from "../../constant/ResponseCode";
 
 export class EnvService implements IEnvService {
@@ -27,4 +27,13 @@ export class EnvService implements IEnvService {
         return v1_env(this.client);
     }
     
+    async createEnv(name: string): Promise<IServiceResponse<IEnvInfo>> {
+        if (!name) {
+            return {
+                code: ResponseCode.FA_INVALID_PARAMS,
+            }
+        }
+        
+        return v1_env__post(this.client, name)
+    }
 }

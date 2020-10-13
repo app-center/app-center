@@ -48,6 +48,13 @@ export function withBreadCrumbItems(): IHomeCtxOptions {
             })
         }
         
+        if (ctx.envCreationFlag) {
+            items.push({
+                link: `/env`,
+                text: appT('txt__create_env', '环境创建')
+            })
+        }
+        
         if (items.length > 1) {
             items[items.length - 1].link = undefined
         }

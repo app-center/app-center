@@ -39,6 +39,7 @@ import {useQueryEnvList} from "../../useHook/useQueryCache";
 import {withSelectedEnv} from "./context/selectedEnv";
 import {withBreadCrumbItems} from "./context/breadCrumbItems";
 import {withVersionReleaseFlag} from "./context/versionReleaseFlag";
+import {withEnvCreationFlag} from "./context/envCreationFlag";
 
 const HomePage: React.FC = (props) => {
     const context = useCtx<IHomeCtx>()
@@ -51,6 +52,7 @@ const HomePage: React.FC = (props) => {
         withQueryCache(),
         withSelectedEnv(),
         withVersionReleaseFlag(),
+        withEnvCreationFlag(),
         withBreadCrumbItems(),
     )
     
@@ -193,11 +195,11 @@ const HomePage: React.FC = (props) => {
                     <main className={klass.content}>
                         <Toolbar/>
                         <Switch>
-                            <Route path='/' exact>
-                                <BranchInfoPage/>
-                            </Route>
                             <Route path='/env/:envId'>
                                 <EnvInfoPage/>
+                            </Route>
+                            <Route>
+                                <BranchInfoPage/>
                             </Route>
                         </Switch>
                     </main>

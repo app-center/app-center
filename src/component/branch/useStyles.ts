@@ -28,5 +28,10 @@ export const useStyles = makeStyles(theme => {
             paddingLeft: 40 + theme.spacing(3),
             flexDirection: 'column',
         },
+        envFabAdd: {
+            position: "fixed",
+            right: theme.spacing(3),
+            bottom: theme.spacing(3),
+        },
     }
 })

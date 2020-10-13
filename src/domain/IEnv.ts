@@ -7,4 +7,6 @@ import {IEnvInfo} from "./model/EnvInfo";
 export interface IEnvService {
     fetchEnvList(): Promise<IServiceResponse<IEnvInfo[]>>;
     fetchEnvInfo(envId: string): Promise<IServiceResponse<IEnvInfo>>;
+    
+    createEnv(name: string): Promise<IServiceResponse<IEnvInfo>>;
 }

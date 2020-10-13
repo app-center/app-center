@@ -45,7 +45,7 @@ const EnvPage: React.FC = () => {
     } = ctx
     
     const onFabAddIconClick = useCallback(() => {
-        history.push(`${url}/version/release`)
+        history.push(`${url}/version`)
     }, [url])
     
     if (isEnvInfoFetching) return <></>
@@ -63,7 +63,7 @@ const EnvPage: React.FC = () => {
             <Grid container spacing={3}>
                 <Grid item xl={9} lg={8} xs={6}>
                     <Switch>
-                        <Route path={`${path}/version/release`} exact>
+                        <Route path={`${path}/version`} exact>
                             <VersionRelease envInfo={envInfo}/>
                         </Route>
                         <Route>
