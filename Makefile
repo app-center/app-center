@@ -1,6 +1,6 @@
 Project = Xiner-Webadmin
 
-Version := $(shell git describe --tags --dirty --match="XA*" 2> /dev/null || echo XA0.0.0-dirty)
+Version := $(shell git describe --tags --dirty --match="v*" 2> /dev/null || echo v0.0.0-dirty)
 
 EnvList := dev gray qc prod
 ReleaseOutput := out
