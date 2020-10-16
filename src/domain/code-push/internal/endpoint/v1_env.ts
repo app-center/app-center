@@ -13,6 +13,7 @@ export function v1_env__post(transport: ITransport, params: IEnvCreateForm): Pro
     return transport.request.post('v1/env', {
         data: {
             envName: params.name,
+            envId: params.id,
             envEncToken: params.encToken,
         }
     })

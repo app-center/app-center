@@ -14,5 +14,6 @@ export type IEnvInfoFromSvr = IEnvInfo
 
 export interface IEnvCreateForm {
     name: string;
+    id?: string;
     encToken?: string;
 }

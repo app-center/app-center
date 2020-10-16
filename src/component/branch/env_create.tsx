@@ -24,12 +24,14 @@ const EnvCreate: React.FC = () => {
     } = useFormik<ICreateFields>({
         initialValues: {
             name: '',
+            id: '',
             encToken: '',
         },
         async onSubmit(values: ICreateFields) {
             const res = await envService.createEnv({
                 name: values.name,
                 encToken: values.encToken,
+                id: values.id,
             })
             
             if (res.code === ResponseCode.S_OK) {
@@ -82,6 +84,20 @@ const EnvCreate: React.FC = () => {
                             }}
                             margin={"normal"}
                             fullWidth
+                            name='id'
+                            value={values.id}
+                            onChange={handleChange}
+                            error={!!errors.id}
+                            label={t('lbl__env_create__id', '环境 ID')}
+                            placeholder={t('ph__env_create__id', '环境 ID')}
+                        />
+                        <TextField
+                            variant="outlined"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            margin={"normal"}
+                            fullWidth
                             name='encToken'
                             value={values.encToken}
                             onChange={handleChange}
@@ -105,5 +121,6 @@ export default EnvCreate
 
 interface ICreateFields {
     name: string;
+    id: string;
     encToken: string;
 }
