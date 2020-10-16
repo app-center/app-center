@@ -24,6 +24,6 @@ export function withQueryCache(): IHomeCtxOptions {
                     notify: false
                 })
             }
-        }, [ctx.queryCache])
+        }, [])
     }
 }
